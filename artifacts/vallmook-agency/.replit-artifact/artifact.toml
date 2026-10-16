@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Vallmook Agency"
+description = "A Portuguese-language institutional website for Vallmook Agency, presenting the agency's creative services, brand identity, and contact path for prospective clients and creators."
+version = "1.0.0"
+id = "artifacts/vallmook-agency"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18452
+
+[services.development]
+run = "pnpm --filter @workspace/vallmook-agency run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vallmook-agency", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vallmook-agency/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18452"
+BASE_PATH = "/"
