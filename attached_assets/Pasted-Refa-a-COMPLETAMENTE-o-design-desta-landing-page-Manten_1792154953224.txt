@@ -1,0 +1,48 @@
+Refaça COMPLETAMENTE o design desta landing page. Mantenha 100% da copy (todos os textos, seções, formulário e FAQ) exatamente como estão hoje e mude só o visual, as animações e as interações. O resultado precisa parecer um site premiado no Awwwards: moderno, cinematográfico, vivo, com sensação de produto de luxo da creator economy. Nada de cara de template.
+
+STACK
+React + Vite + TypeScript, Tailwind CSS, Framer Motion para animações de interface, GSAP com ScrollTrigger para animações de rolagem, Lenis para rolagem suave, e React Three Fiber (Three.js) com um shader GLSL para o fundo interativo. Use as imagens anexadas: o ícone 3D da coroa e o logo completo.
+
+IDENTIDADE VISUAL
+- Fundo base preto profundo #0A090E. Superfícies em grafite #16161C com vidro fosco (backdrop-blur) e borda de 1px em branco a 8%.
+- Prata #ECEEF2 para textos principais e #9AA1AD para secundários (contraste mínimo de 4.5:1).
+- Acentos: ciano #19D3F0 e magenta #FF2D87, usados como luz, brilho, bordas animadas e degradês, nunca como blocos chapados grandes. Roxo #8B3DFF só no meio dos degradês.
+- Tipografia: Sora (Google Fonts). Títulos em ExtraBold, gigantes (clamp de 56px a 128px no hero), espaçamento de letra -0.03em e line-height 0.95. Corpo em Regular 18px. Rótulos pequenos em caixa alta com espaçamento 0.3em. Cinzel só no nome VALLMOOK do logo.
+- Muito espaço negativo, grid de 12 colunas e seções com alturas e layouts diferentes entre si.
+
+FUNDO INTERATIVO (página inteira)
+Um canvas WebGL fixo atrás de todo o conteúdo, com um shader de aurora/fumaça fluida em preto, ciano e magenta, bem sutil e lento. A luz segue o cursor com suavização (lerp) e cria um brilho que distorce levemente o fluido onde o mouse passa. Por cima, um grão de filme leve (noise) a 4% e uma vinheta escura nas bordas. Conforme a rolagem avança, as cores mudam suavemente: mais ciano no topo e mais magenta perto do formulário. No celular, use uma versão mais leve com gradientes animados em CSS, sem WebGL.
+
+CURSOR
+Um círculo de 12px com mix-blend-mode difference que segue o mouse com atraso. Ele cresce e mostra "VER" sobre cards e "IR" sobre botões. Desative em telas de toque.
+
+ANIMAÇÕES POR SEÇÃO
+1. Loader de entrada (1,2s): a coroa 3D aparece com um feixe de luz passando por ela, e a tela se abre em cortina para o hero.
+2. Hero: o título entra palavra por palavra, de baixo para cima com máscara, e "A gente transforma" ganha um degradê ciano→magenta animado em loop. A coroa 3D fica à direita, flutuando devagar, com efeito de tilt 3D que segue o mouse (perspectiva, rotação até 12°) e um reflexo de luz que corre pela superfície. Os botões são magnéticos (puxam levemente em direção ao cursor) e têm borda em degradê girando. Embaixo, um indicador de rolagem animado.
+3. Faixa infinita (marquee) com as plataformas TikTok · Instagram · YouTube · Twitch · Kwai · Lives, em texto vazado (outline), rodando em velocidade que acelera quando o usuário rola.
+4. Dor: o título fica fixo à esquerda (sticky) enquanto os itens da lista entram um a um pela direita. Cada item ganha um risco animado por cima ao entrar na tela. No fim, a frase de transição aparece em tamanho grande, com as palavras acendendo uma a uma conforme a rolagem (efeito de texto que preenche com cor).
+5. Como funciona: seção fixa (pinned) com rolagem horizontal. Os 3 passos são cards grandes de vidro que deslizam lateralmente, com uma linha de progresso em degradê que se preenche e números 01, 02, 03 gigantes vazados ao fundo.
+6. Benefícios: grid estilo bento com cards de tamanhos diferentes. Cada card tem um holofote (spotlight) radial que segue o mouse dentro dele e uma borda que acende em ciano/magenta onde o cursor está. Os cards entram em cascata com leve escala.
+7. Para quem é: um botão de alternância grande ("É para você" / "Não é para você") que troca as listas com animação de layout (Framer Motion layout), com ícones ✓ e ✕ animados.
+8. Prova social: contadores numéricos que sobem ao aparecer na tela (manter os placeholders [INSERIR]) e um carrossel de depoimentos arrastável, com inércia.
+9. O que você recebe: lista que se revela item a item com um check que se desenha (SVG stroke animation), ao lado de um card de destaque com a coroa 3D girando devagar.
+10. Objeções e FAQ: acordeões com abertura suave de altura, ícone + que gira para ×, e um brilho que corre pela borda do item aberto.
+11. Formulário: formulário em etapas (multi-step), uma pergunta por tela, com barra de progresso em degradê, transição deslizante entre as etapas e validação em tempo real. Ao enviar, uma explosão de partículas ciano e magenta forma a coroa por um instante e então aparece a mensagem de sucesso.
+12. CTA final: título gigante centralizado, com partículas finas que se afastam do cursor (campo de repulsão) ao fundo e o botão principal com brilho pulsante.
+13. Rodapé: o nome VALLMOOK enorme, ocupando a largura toda, em texto vazado que se preenche de prata conforme o usuário chega ao fim da página.
+
+DETALHES QUE DÃO VIDA
+- Todas as seções entram com fade + leve deslocamento e blur saindo (de blur 8px para 0) quando aparecem na tela.
+- Parallax sutil em imagens e elementos decorativos.
+- Menu fixo com vidro fosco que encolhe ao rolar e mostra uma barra fina de progresso de leitura em degradê no topo.
+- Hover em links com sublinhado que se desenha da esquerda para a direita.
+- Microinterações em todos os botões: escala 0.97 ao clicar e brilho ao passar o mouse.
+
+QUALIDADE E PERFORMANCE
+- Totalmente responsivo. No celular: layout em uma coluna, rolagem horizontal vira vertical, sem cursor customizado, efeitos 3D simplificados e títulos ainda grandes.
+- Respeite prefers-reduced-motion: nesse caso, desligue o shader, o parallax e as animações longas, mantendo só fades curtos.
+- Meta: 60fps. Lazy-load das imagens, shader com resolução reduzida (devicePixelRatio máximo 1.5) e pause o canvas quando a aba não estiver visível.
+- Acessibilidade: botões e campos reais, foco visível, labels nos inputs e alt nas imagens.
+- SEO: manter o título e a meta descrição atuais.
+
+Antes de finalizar, revise a página inteira no desktop e no celular e garanta que nenhuma seção ficou parecida com a outra e que nada fica cortado ou sobreposto.
