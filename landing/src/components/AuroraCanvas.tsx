@@ -28,12 +28,15 @@ const fragmentShader = `
     vec2 p = uv * 3.0;
     float t = uTime * 0.035;
     float flow = noise(p + vec2(t, -t)) + noise(p * 1.8 - vec2(t * .7, t));
-    float cursor = exp(-distance(uv, uPointer) * 5.0) * .22;
+    float pointerDistance = distance(uv, uPointer);
+    float cursor = exp(-pointerDistance * 4.0) * .55;
+    float ripple = sin(pointerDistance * 38.0 - uTime * 1.6) * exp(-pointerDistance * 7.0) * .5 + .5;
     float cyan = smoothstep(.72, 1.55, flow + cursor) * (1.0 - uScroll * .48);
-    float magenta = smoothstep(.8, 1.5, noise(p + vec2(4.2, -2.0) + t) + uScroll * .5) * (.35 + uScroll * .8);
+    float magenta = smoothstep(.8, 1.5, noise(p + vec2(4.2, -2.0) + t) + uScroll * .5 + cursor * .6) * (.35 + uScroll * .8);
     vec3 color = vec3(.015, .018, .03);
-    color += vec3(.02, .48, .58) * cyan * .16;
-    color += vec3(.5, .035, .2) * magenta * .13;
+    color += vec3(.02, .48, .58) * cyan * .22;
+    color += vec3(.5, .035, .2) * magenta * .18;
+    color += mix(vec3(.05, .5, .62), vec3(.6, .06, .3), uv.x) * cursor * ripple * .22;
     gl_FragColor = vec4(color, .36);
   }
 `;

@@ -1,0 +1,69 @@
+/* Section backgrounds from the Vallmook-Nova-Marca "Foto para o fundo" library.
+   Each fold gets its own image under a scrim that keeps text contrast, and the edges
+   fade out with a mask so neighbouring folds melt into the same continuous page. */
+
+.bg-section,.bg-band { position:relative;isolation:isolate; }
+.bg-section::before,.bg-band::before {
+  content:"";position:absolute;z-index:-1;pointer-events:none;
+  top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);
+  background:var(--bg-scrim,linear-gradient(rgba(8,8,14,.6),rgba(8,8,14,.6))),var(--bg-img) var(--bg-pos,center)/cover no-repeat;
+  opacity:var(--bg-opacity,1);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 var(--bg-fade,18%),#000 calc(100% - var(--bg-fade,18%)),transparent);
+  mask-image:linear-gradient(180deg,transparent,#000 var(--bg-fade,18%),#000 calc(100% - var(--bg-fade,18%)),transparent);
+}
+.bg-band::before { top:-56px;bottom:-56px;--bg-fade:22%; }
+/* Bands sit inside the streamer container: lift the content above their own backdrop. */
+.streamer { overflow:visible; }
+
+/* 2. Sobre: premium office at night, mirrored so the V sign sits behind the collage */
+.bg-about { --bg-img:url('./assets/backgrounds/about-office.webp');--bg-opacity:.9;--bg-scrim:linear-gradient(90deg,rgba(8,8,14,.5),rgba(8,8,14,.82) 52%,rgba(8,8,14,.9)); }
+.bg-about::before { transform:translateX(-50%) scaleX(-1); }
+
+/* 3. TikTok LIVE: soft burst of gifts and diamonds */
+.bg-tiktok { --bg-img:url('./assets/backgrounds/tiktok-gifts.webp');--bg-scrim:radial-gradient(ellipse at 50% 50%,rgba(8,8,14,.8),rgba(8,8,14,.42) 78%); }
+
+/* 4. Benefícios: faceted crystal wall in low light */
+.bg-benefits { --bg-img:url('./assets/backgrounds/benefits-crystal.webp');--bg-scrim:linear-gradient(rgba(8,8,14,.5),rgba(8,8,14,.5)); }
+
+/* 5. Como se inscrever: path of light in perspective */
+.bg-join { --bg-img:url('./assets/backgrounds/join-path.webp');--bg-pos:center 60%;--bg-scrim:linear-gradient(90deg,rgba(8,8,14,.42),rgba(8,8,14,.72) 55%,rgba(8,8,14,.78)); }
+
+/* 6. Talento você tem: metal structure and grid */
+.bg-pain { --bg-img:url('./assets/backgrounds/pain-grid.webp');--bg-scrim:linear-gradient(rgba(8,8,14,.55),rgba(8,8,14,.62)); }
+
+/* 7. Você cria: blurred streaming setup */
+.bg-how { --bg-img:url('./assets/backgrounds/how-setup.webp');--bg-scrim:linear-gradient(rgba(8,8,14,.74),rgba(8,8,14,.8)); }
+.bg-how::before { filter:blur(3px); }
+
+/* 8. O que muda: light before / after, dark on the left, lit on the right */
+.bg-change { --bg-img:url('./assets/backgrounds/change-split.webp');--bg-scrim:linear-gradient(90deg,rgba(8,8,14,.5),rgba(8,8,14,.7) 60%,rgba(8,8,14,.78)); }
+
+/* 9. Trabalhando pela sua carreira: ascent with growing light steps */
+.bg-receive { --bg-img:url('./assets/backgrounds/receive-steps.webp');--bg-scrim:linear-gradient(90deg,rgba(8,8,14,.82),rgba(8,8,14,.5) 60%,rgba(8,8,14,.4)); }
+
+/* 10. FAQ: calm, almost flat, reading comes first */
+.bg-faq { --bg-img:url('./assets/backgrounds/faq-calm.webp');--bg-scrim:linear-gradient(rgba(8,8,14,.2),rgba(8,8,14,.2)); }
+
+/* 11. Formulário + CTA final: the big glowing V closes the page */
+.bg-crown { --bg-img:url('./assets/backgrounds/closing-crown.webp');--bg-opacity:.55;--bg-pos:center 30%;--bg-scrim:linear-gradient(rgba(8,8,14,.62),rgba(8,8,14,.7)); }
+.bg-closing { --bg-img:url('./assets/backgrounds/closing-crown.webp');--bg-pos:center 55%;--bg-fade:24%;--bg-scrim:radial-gradient(ellipse 60% 55% at 50% 55%,rgba(8,8,14,.5),rgba(8,8,14,.06) 100%); }
+
+/* 1. Hero: rotating backdrop (wall of lives, portraits in light, live hub) */
+.hero-environment { position:absolute;inset:0;width:100%;z-index:-3;opacity:1;overflow:hidden;mix-blend-mode:normal; }
+.hero-environment img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.9) brightness(.82);opacity:0;transform:scale(1.08);transition:opacity 1.8s ease,transform 9s ease-out; }
+.hero-environment img.is-active { opacity:.78;transform:scale(1); }
+.hero-environment::after { content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,8,14,.9) 0%,rgba(8,8,14,.6) 42%,rgba(8,8,14,.18) 100%),linear-gradient(0deg,#0a090e 0%,transparent 28%),linear-gradient(180deg,rgba(8,8,14,.6),transparent 22%); }
+.hero::before { background:radial-gradient(ellipse 34% 52% at 76% 55%,rgba(8,8,14,.55),transparent 70%)!important; }
+
+@media (max-width:900px) {
+  .bg-section::before,.bg-band::before { background-position:var(--bg-pos-m,center); }
+  .hero-environment::after { background:linear-gradient(180deg,rgba(8,8,14,.72),rgba(8,8,14,.86)),linear-gradient(0deg,#0a090e 0%,transparent 28%); }
+  .bg-about { --bg-scrim:linear-gradient(rgba(8,8,14,.78),rgba(8,8,14,.84)); }
+  .bg-join,.bg-receive,.bg-change { --bg-scrim:linear-gradient(rgba(8,8,14,.74),rgba(8,8,14,.78)); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero-environment img { transition:opacity .01s;transform:none; }
+}
+
+/* "Você cria": CTA centred under the three steps */
+.how > .container > .button { display:flex;width:fit-content;margin:44px auto 0; }
